@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.cardview.widget.CardView
+
+        app:cardCornerRadius="4dp"
+        android:background="#114"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:adjustViewBounds="true"
+                android:id="@+id/imgdienthoai"
+                android:layout_width="100dp"
+                android:layout_height="100dp"></ImageView>
+            <LinearLayout
+
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_margin="5dp"
+                    android:textStyle="bold"
+                    android:id="@+id/textviewdienthoai"
+                    android:textColor="#0040FF"
+                    android:textSize="18sp"
+                    android:text="Tên sản phẩm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+                <TextView
+                    android:textSize="18sp"
+                    android:layout_margin="5dp"
+                    android:text="Giá sản phẩm"
+                    android:id="@+id/textviewgiadienthoai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+                <TextView
+                    android:text="Mô tả điện thoại"
+                    android:layout_margin="5dp"
+                    android:id="@+id/textviewmotadienthoai"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

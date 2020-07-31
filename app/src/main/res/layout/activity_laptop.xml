@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".Activity.LaptopActivity">
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarlaptop"
+        app:titleTextColor="#F8E7E7"
+        android:background="@color/colorPrimary"
+        app:title="Laptop"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        tools:ignore="NewApi"></androidx.appcompat.widget.Toolbar>
+    <ListView
+        android:id="@+id/listviewlaptop"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
+</LinearLayout>

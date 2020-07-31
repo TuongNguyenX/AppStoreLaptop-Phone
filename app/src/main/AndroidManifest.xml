@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.appstorelaptop_phone">
-
+    package="com.example.appstorelaptop_phone"
+    android:targetSandboxVersion="1">
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,14 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:networkSecurityConfig="@xml/network_security_config"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity android:name=".Activity.ThongTinKHActivity"></activity>
-        <activity android:name=".Activity.ThongTinActivity" />
+        <activity android:name=".Activity.ThongTinActivity"
+            android:label="@string/title_activity_thong_tin"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
         <activity android:name=".Activity.LienHeActivity" />
         <activity android:name=".Activity.GioHangActivity" />
         <activity android:name=".Activity.ChiTietSPActivity" />
         <activity android:name=".Activity.LaptopActivity" />
-        <activity android:name=".Activity.DienthoaiActivity" />
+        <activity android:name=".Activity.DienThoaiActivity" />
         <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

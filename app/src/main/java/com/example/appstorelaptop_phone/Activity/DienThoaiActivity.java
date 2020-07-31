@@ -25,7 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.appstorelaptop_phone.Adapter.laptopadapter;
+import com.example.appstorelaptop_phone.Adapter.dienthoaiadapter;
 import com.example.appstorelaptop_phone.Common.Server;
 import com.example.appstorelaptop_phone.Common.checkconnection;
 import com.example.appstorelaptop_phone.Model.Sanpham;
@@ -39,12 +39,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LaptopActivity extends AppCompatActivity {
-    Toolbar toolbarlaptop;
-    ListView lvlaptop;
-    laptopadapter laptopadapter;
-    ArrayList<Sanpham> manglaptop;
-    int idlaptop = 0;
+public class DienThoaiActivity extends AppCompatActivity {
+    Toolbar toolbardt;
+    ListView lvdt;
+    com.example.appstorelaptop_phone.Adapter.dienthoaiadapter dienthoaiadapter;
+    ArrayList<Sanpham> mangdt;
+    int iddt = 0;
     int page =1;
     View footerview;
     boolean isLoading =false; // không cho kéo xuống nhiều lần
@@ -53,29 +53,32 @@ public class LaptopActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_laptop);
-        AnhXa();
+        setContentView(R.layout.activity_dienthoai);
         if (checkconnection.haveNetworkConnection(getApplicationContext())){
+            Anhxa();
             GetIDLoaiSP();
             ActionToolBar();
             GetData(page);
             LoadMoreData();
+
+        } else {
+            checkconnection.showtoast(getApplicationContext(),"Bạn hãy kiểm tra lại internet");
+            finish();
         }
-        else {
-            checkconnection.showtoast(getApplicationContext(),"bạn hãy kiểm tra lại internet");
-        }
+
     }
+
     private void LoadMoreData() {
-        lvlaptop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvdt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(),ChiTietSPActivity.class);
-                intent.putExtra("thongtinsp",manglaptop.get(position));
+                intent.putExtra("thongtinsp",mangdt.get(position));
                 startActivity(intent);
             }
         });
 
-        lvlaptop.setOnScrollListener(new AbsListView.OnScrollListener() {
+        lvdt.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
 
@@ -91,6 +94,7 @@ public class LaptopActivity extends AppCompatActivity {
             }
         });
     }
+
     private void GetData(int Page) {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         String duongdan = Server.urldienthoai+String.valueOf(Page);
@@ -98,34 +102,33 @@ public class LaptopActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 int id =0;
-                String tenlaptop = "";
-                int gialaptop = 0;
-                String hinhanhlaptop = "";
-                String motalaptop = "";
-                int idsplaptop = 0;
+                String tendt = "";
+                int giadt = 0;
+                String hinhanhdt = "";
+                String mota = "";
+                int idspdt = 0;
                 if (response != null && response.length() != 3){
-                    lvlaptop.removeFooterView(footerview);
+                    lvdt.removeFooterView(footerview);
                     try {
                         JSONArray jsonArray = new JSONArray(response);
                         for (int i =0;i<jsonArray.length();i++){
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             id = jsonObject.getInt("id");
-                            tenlaptop = jsonObject.getString("tensp");
-                            gialaptop = jsonObject.getInt("giasp");
-                            hinhanhlaptop = jsonObject.getString("hinhanhsp");
-                            motalaptop = jsonObject.getString("motasp");
-                            idsplaptop = jsonObject.getInt("idsanpham");
-                            manglaptop.add(new Sanpham(id,tenlaptop,gialaptop,hinhanhlaptop,motalaptop,idsplaptop));
-                            laptopadapter.notifyDataSetChanged();
+                            tendt = jsonObject.getString("tensp");
+                            giadt = jsonObject.getInt("giasp");
+                            hinhanhdt = jsonObject.getString("hinhanhsp");
+                            mota = jsonObject.getString("motasp");
+                            idspdt = jsonObject.getInt("idsanpham");
+                            mangdt.add(new Sanpham(id,tendt,giadt,hinhanhdt,mota,idspdt));
+                            dienthoaiadapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                         Log.d("khoa", "onErrorResponse: "+e);
                     }
-                }
-                else {
+                } else {
                     limitdata = true;
-                    lvlaptop.removeFooterView(footerview);
+                    lvdt.removeFooterView(footerview);
                     Toast.makeText(getApplicationContext(), "đã hết dữ liệu", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -138,34 +141,53 @@ public class LaptopActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> param = new HashMap<>();
-                param.put("idsanpham",String.valueOf(idlaptop));
+                param.put("idsanpham",String.valueOf(iddt));
                 return param;
             }
         };
         requestQueue.add(stringRequest);
     }
+
     private void ActionToolBar() {
-        setSupportActionBar(toolbarlaptop);
+        setSupportActionBar(toolbardt);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarlaptop.setNavigationOnClickListener(new View.OnClickListener() {
+        toolbardt.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
     }
+
     private void GetIDLoaiSP() {
-        idlaptop = getIntent().getIntExtra("idloaisp",-1);
+        iddt = getIntent().getIntExtra("idloaisp",-1);
     }
-    private void AnhXa() {
-        toolbarlaptop = findViewById(R.id.toolbarlaptop);
-        lvlaptop =findViewById(R.id.listviewlaptop);
-        manglaptop = new ArrayList<>();
-        laptopadapter = new laptopadapter(manglaptop, getApplicationContext());
-        lvlaptop.setAdapter(laptopadapter);
+
+    private void Anhxa() {
+        toolbardt = findViewById(R.id.toolbardienthoai);
+        lvdt =findViewById(R.id.listviewdienthoai);
+        mangdt = new ArrayList<>();
+        dienthoaiadapter = new dienthoaiadapter(mangdt, getApplicationContext());
+        lvdt.setAdapter(dienthoaiadapter);
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         footerview = inflater.inflate(R.layout.progressbar,null);
         mHandler = new mHandler();
+    }
+
+    public  class mHandler extends Handler {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what){
+                case 0:
+                    lvdt.addFooterView(footerview);
+                    break;
+                case 1:
+                    GetData(++page);
+                    isLoading =false;
+                    break;
+            }
+            super.handleMessage(msg);
+        }
     }
     public class ThreadData extends Thread{
         @Override
@@ -180,21 +202,6 @@ public class LaptopActivity extends AppCompatActivity {
             Message message = mHandler.obtainMessage(1);
             mHandler.sendMessage(message);
             super.run();
-        }
-    }
-    public  class mHandler extends Handler {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            switch (msg.what){
-                case 0:
-                    lvlaptop.addFooterView(footerview);
-                    break;
-                case 1:
-                    GetData(++page);
-                    isLoading =false;
-                    break;
-            }
-            super.handleMessage(msg);
         }
     }
     @Override
@@ -212,4 +219,5 @@ public class LaptopActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
