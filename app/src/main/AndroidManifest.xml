@@ -8,10 +8,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.LaptopActivity"></activity>
+        <activity android:name=".Activity.ThongTinKHActivity"></activity>
+        <activity android:name=".Activity.ThongTinActivity" />
+        <activity android:name=".Activity.LienHeActivity" />
+        <activity android:name=".Activity.GioHangActivity" />
+        <activity android:name=".Activity.ChiTietSPActivity" />
+        <activity android:name=".Activity.LaptopActivity" />
         <activity android:name=".Activity.DienthoaiActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
